@@ -1,12 +1,12 @@
 @name('transform')
-POST "http://localhost:7071/api/transform"
+// POST "http://localhost:7071/api/transform"
+POST "https://jolt-demo.azurewebsites.net/api/transform"
 json({
     "input":"""
     {
         "rating": {
           "primary": {
             "value": 3,
-            """"""""
             "max": 5
           },
           "quality": {

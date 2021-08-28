@@ -50,7 +50,7 @@ Here you can experiment with the stock Jolt Transforms without having to downloa
 </div>
 </div> <!-- row 1 -->
 
-<form id="transformForm" role="form" action="/api/transform" method="post">
+<form id="transformForm" role="form" action="https://jolt-demo.azurewebsites.net/api/transform" method="post">
 
 <div class="row"> <!-- row 2 -->
 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -355,12 +355,14 @@ $("#transformForm").submit(function(event) {
     outputCodeMirror.setValue( "Sending 'input' and 'spec' to the server.\n\nIt is a free tier on Google App Engine,\nso it may be asleep." );
 
     // Send the data using post
-    var posting = $.post( url, { input : input, spec : spec, sort : sort } );
-
-    // Put the results in a div
-    posting.done(function( data ) {
-        var content = data ;
-        outputCodeMirror.setValue( content );
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: JSON.stringify({ input : input, spec : spec, sort : sort }),
+        success: function(data){
+                var content = data ;
+                outputCodeMirror.setValue( JSON.stringify(content, null, 2) );
+            },
     });
 
     // return false so that we prevent the standard form submit behavior from happening
