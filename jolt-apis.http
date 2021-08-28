@@ -1,0 +1,51 @@
+@name('transform')
+POST "http://localhost:7071/api/transform"
+json({
+    "input":"""
+    {
+        "rating": {
+          "primary": {
+            "value": 3,
+            """"""""
+            "max": 5
+          },
+          "quality": {
+            "value": 3,
+            "max": 7
+          }
+        }
+      }
+    
+    """,
+    "spec":"""
+    [
+        {
+          "operation": "shift",
+          "spec": {
+            "rating": {
+              // loop thru all the ratings
+              "*": {
+                // "$" is actually "$(0)" means grab the key 0 levels up the tree
+                //   and use that as the output.
+                // "ratingNames[]" means send the ouput to a ratingNames array,
+                //   even if there is only one output
+                "$": "ratingNames[]"
+              }
+            }
+          }
+        }
+      ]
+    """,
+    "sort":true
+})
+
+
+
+// azure java functions has no support for 
+// urlencoded
+@name('urlencoded')
+POST "http://localhost:7071/api/transform"
+data({
+    "input": "",
+    "spec": ""
+})
